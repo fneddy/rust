@@ -316,7 +316,7 @@ fn packed_stack_attr<'ll>(cx: &SimpleCx<'ll>, sess: &Session) -> Option<&'ll Att
         return None;
     }
 
-    if sess.opts.cg.packed_stack {
+    if sess.opts.unstable_opts.packed_stack {
         Some(llvm::CreateAttrString(cx.llcx, "packed-stack"))
     } else {
         None
