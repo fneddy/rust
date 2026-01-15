@@ -16,7 +16,7 @@ use rustc_middle::bug;
 use rustc_session::Session;
 use rustc_session::config::{PrintKind, PrintRequest};
 use rustc_target::spec::{
-    Abi, Arch, Env, MergeFunctions, Os, PanicStrategy, SmallDataThresholdSupport,
+    Abi, Arch, Env, MergeFunctions, Os, PanicStrategy, RustcAbi, SmallDataThresholdSupport,
 };
 use smallvec::{SmallVec, smallvec};
 
@@ -650,6 +650,20 @@ fn llvm_features_by_flags(sess: &Session, features: &mut Vec<String>) {
             sess.dcx().emit_fatal(errors::FixedX18InvalidArch { arch: sess.target.arch.desc() });
         } else {
             features.push("+reserve-x18".into());
+        }
+    }
+
+    // -Zpacked-stack +backchain
+    if sess.opts.unstable_opts.packed_stack {
+        if sess.target.arch != Arch::S390x {
+            sess.dcx().emit_fatal(errors::PackedStackInvalidArch { arch: sess.target.arch.desc() });
+        }
+
+        if sess.target.arch == Arch::S390x
+            && features.contains(&"+backchain".into())
+            && sess.target.options.rustc_abi != Some(RustcAbi::S390xSoftFloat)
+        {
+            sess.dcx().emit_fatal(errors::PackedStackAndBackchainRequiresSoftFloat);
         }
     }
 }

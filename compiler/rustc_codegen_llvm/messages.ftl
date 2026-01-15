@@ -30,6 +30,12 @@ codegen_llvm_offload_nonexisting = the given path/file to `host.out` does not ex
 codegen_llvm_offload_without_enable = using the offload feature requires -Z offload=<Device or Host=/absolute/path/to/host.out>
 codegen_llvm_offload_without_fat_lto = using the offload feature requires -C lto=fat
 
+codegen_llvm_packed_stack_and_backchain_requires_soft_float =
+    enabling both `packed-stack` and `backchain` attributes is incompatible with the default hard-float abi.
+    enable soft-float abi by setting `rustc_abi` = `"s390x-softfloat"` if you need both attributes
+
+codegen_llvm_packed_stack_invalid_arch = the `-Zpacked-stack` flag is not supported on the `{$arch}` architecture
+
 codegen_llvm_parse_bitcode = failed to parse bitcode for LTO module
 codegen_llvm_parse_bitcode_with_llvm_err = failed to parse bitcode for LTO module: {$llvm_err}
 

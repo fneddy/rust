@@ -487,6 +487,12 @@ one of the following values:
 If not specified, overflow checks are enabled if
 [debug-assertions](#debug-assertions) are enabled, disabled otherwise.
 
+## packed-stack
+
+This flag enables packed StackFrames on s390x.
+Enabling both `packed-stack` and `backchain` attributes is incompatible with the default hard-float ABI.
+Enable soft-float ABI by setting `rustc_abi` = `"s390x-softfloat"` if you need both attributes.
+
 ## panic
 
 This option lets you control what happens when the code panics.

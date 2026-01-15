@@ -192,3 +192,13 @@ pub(crate) struct FixedX18InvalidArch<'a> {
 #[derive(Diagnostic)]
 #[diag(codegen_llvm_sanitizer_kcfi_arity_requires_llvm_21_0_0)]
 pub(crate) struct SanitizerKcfiArityRequiresLLVM2100;
+
+#[derive(Diagnostic)]
+#[diag(codegen_llvm_packed_stack_and_backchain_requires_soft_float)]
+pub(crate) struct PackedStackAndBackchainRequiresSoftFloat;
+
+#[derive(Diagnostic)]
+#[diag(codegen_llvm_packed_stack_invalid_arch)]
+pub(crate) struct PackedStackInvalidArch<'a> {
+    pub arch: &'a str,
+}
